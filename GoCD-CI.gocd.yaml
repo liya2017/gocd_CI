@@ -1,0 +1,30 @@
+format_version: 10
+pipelines:
+  GoCD-CI:
+    group: My-Pipelines
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      git-cfb0011:
+        git: git@github.com:liya2017/gocd_CI.git
+        shallow_clone: false
+        auto_update: true
+        branch: main
+    stages:
+    - Test-and-report:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          run-test:
+            timeout: 0
+            tasks:
+            - exec:
+                arguments:
+                - Test done!
+                command: echo
+                run_if: passed
